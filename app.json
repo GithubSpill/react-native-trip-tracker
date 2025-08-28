@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "yttutorialapp",
     "name": "yt-tutorial",
     "slug": "yt-tutorial",
     "version": "1.0.0",
@@ -24,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
