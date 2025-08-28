@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Dashboard">
       <Tab.Screen name="Dashboard" component={DashboardScreen} />
       <Tab.Screen name="Trips" component={StartTripScreen} />
       <Tab.Screen name="Receipts" component={AddReceiptScreen} />
