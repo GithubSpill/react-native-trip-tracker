@@ -14,7 +14,6 @@ export default function App() {
         setIsDbReady(true);
       } catch (error) {
         console.error('Database initialization failed:', error);
-        // You might want to show an error message to the user here
       }
     };
 
