@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, SafeAreaView } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 import { initDatabase } from './api/db';
 import colors from './styles/colors';
+import { TripProvider } from './context/TripContext';
 
 export default function App() {
   const [isDbReady, setIsDbReady] = useState(false);
@@ -22,11 +23,19 @@ export default function App() {
 
   if (!isDbReady) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </SafeAreaView>
     );
   }
 
-  return <AppNavigator />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TripProvider>
+        <AppNavigator />
+      </TripProvider>
+    </SafeAreaView>
+  );
 }

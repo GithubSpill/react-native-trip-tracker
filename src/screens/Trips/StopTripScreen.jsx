@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import useTrips from '../../hooks/useTrips';
+import { TripContext } from '../../context/TripContext';
 
 export default function StopTripScreen() {
-  const { activeTrip, stopTrip } = useTrips();
+  const { activeTrip, setActiveTrip } = useContext(TripContext);
   const [endOdometer, setEndOdometer] = useState('');
   const [endPhoto, setEndPhoto] = useState('');
   const [income, setIncome] = useState('');
@@ -16,26 +16,25 @@ export default function StopTripScreen() {
     );
   }
 
-  const handleStopTrip = async () => {
+  const handleStopTrip = () => {
     if (!endOdometer || !income) {
-      Alert.alert('Error', 'Please enter both end odometer and income.');
+      Alert.alert('Error', 'Please enter end odometer and income');
       return;
     }
 
-    try {
-      await stopTrip({
-        endOdometer: parseInt(endOdometer, 10),
-        endPhoto,
-        income: parseFloat(income),
-      });
-      Alert.alert('Success', 'Trip stopped successfully!');
-      setEndOdometer('');
-      setEndPhoto('');
-      setIncome('');
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Failed to stop trip.');
-    }
+    const finishedTrip = {
+      ...activeTrip,
+      endOdometer,
+      endPhoto,
+      income,
+    };
+
+    console.log('Trip finished:', finishedTrip);
+    setActiveTrip(null);
+    Alert.alert('Trip stopped successfully!');
+    setEndOdometer('');
+    setEndPhoto('');
+    setIncome('');
   };
 
   return (
@@ -74,12 +73,6 @@ export default function StopTripScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, justifyContent: 'center' },
   label: { fontSize: 16, marginBottom: 5 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 15,
-    padding: 10,
-    borderRadius: 5,
-  },
+  input: { borderWidth: 1, borderColor: '#ccc', marginBottom: 15, padding: 10, borderRadius: 5 },
   text: { fontSize: 18, textAlign: 'center', color: 'gray' },
 });

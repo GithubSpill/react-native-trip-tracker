@@ -6,8 +6,15 @@ export function TripProvider({ children }) {
   const [trips, setTrips] = useState([]);
   const [activeTrip, setActiveTrip] = useState(null);
 
+  const value = {
+    trips,
+    setTrips,
+    activeTrip,
+    setActiveTrip
+  };
+
   return (
-    <TripContext.Provider value={{ trips, setTrips, activeTrip, setActiveTrip }}>
+    <TripContext.Provider value={value}>
       {children}
     </TripContext.Provider>
   );
